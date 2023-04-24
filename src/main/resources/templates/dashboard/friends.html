@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>E2E Messaging Tool</title>
+    </head>
+    <body>
+        <h1>Friends List</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${friends.empty}">
+                    <td>No friends</td>
+                </tr>
+                <tr th:each="friend: ${friends}">
+                    <td>
+                        <span th:text="${friend.username}"> Username </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
