@@ -1,7 +1,5 @@
 package org.sec.secureapp.controller;
 
-
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.sec.secureapp.dto.LoginRequestDto;
 import org.sec.secureapp.entity.User;
@@ -17,9 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.beans.Transient;
 import java.util.List;
@@ -31,10 +27,10 @@ public class AuthenticationController implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping(path = "/user/login")
-    public String logIn(Model model,
-                      @RequestParam(value = "error", required = false) String error,
-                      @RequestParam(value = "exception", required = false) String exception) {
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
+    public String login(Model model,
+                        @RequestParam(value = "error", required = false) String error,
+                        @RequestParam(value = "exception", required = false) String exception) {
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
         return "/user/login";

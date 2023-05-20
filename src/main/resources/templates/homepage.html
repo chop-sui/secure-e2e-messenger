@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>USYD COMP SUPPORT SYSTEM</title>
+  </head>
+  <body>
+    <h1>Welcome to [[${pageName}]]</h1>
+    <div class="container-fluid text-center">
+      <p><a th:href="@{|/login|}" th:text="'Login'"></a></p>
+      <p><a th:href="@{|/register|}" th:text="'Register'"></a></p>
+    </div>
+  </body>
+</html>
