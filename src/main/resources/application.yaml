@@ -22,10 +22,12 @@ jasypt:
     bean: jasyptStringEncryptor
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
-#server:
-#  ssl:
-#    enabled: true
-#    key-store: key.p12
-#    key-store-type: PKCS12
-#    key-store-password: toor
-#    key-alias: System
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: key.p12
+    key-store-type: PKCS12
+    key-store-password: toor
+    key-alias: System
+

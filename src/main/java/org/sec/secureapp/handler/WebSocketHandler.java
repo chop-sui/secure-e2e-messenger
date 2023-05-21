@@ -1,4 +1,4 @@
-package org.sec.secureapp;
+package org.sec.secureapp.handler;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;

@@ -13,4 +13,14 @@ public class HomeController {
         model.addAttribute("pageName", "UCSS");
         return "homepage";
     }
+
+    @GetMapping("/about")
+    public String showAboutPage(Model model) {
+        return "about";
+    }
+
+    @GetMapping("/help")
+    public String showHelpPage(Model model) {
+        return "help";
+    }
 }

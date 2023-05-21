@@ -1,13 +1,25 @@
 package org.sec.secureapp.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.List;
+
+@Setter
 @Getter
-@RequiredArgsConstructor
-public enum Role {
-    USER("User"),
-    ADMIN("Admin");
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="roles")
+public class Role
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final String value;
+    @Column(nullable=false, unique=true)
+    private String name;
+
+    @ManyToMany(mappedBy="roles")
+    private List<User> users;
 }

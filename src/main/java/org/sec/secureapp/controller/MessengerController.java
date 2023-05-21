@@ -1,6 +1,5 @@
 package org.sec.secureapp.controller;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.sec.secureapp.dto.Message;
 import org.sec.secureapp.dto.OutputMessage;
@@ -24,7 +23,7 @@ import java.util.Date;
 
 @Controller
 @RequiredArgsConstructor
-public class MessageController {
+public class MessengerController {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/secured/chat")
@@ -76,5 +75,18 @@ public class MessageController {
         }
         return "chat";
     }
-
+//    @GetMapping(value="/dashboard")
+//    public String getDashboard(Model model) {
+//        SecurityContext securityContext = SecurityContextHolder.getContext();
+//        Authentication authentication = securityContext.getAuthentication();
+//        String username = null;
+//
+//        if (authentication != null) {
+//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//            username = userDetails.getUsername();
+//        }
+//
+//        model.addAttribute("friends", userService.getUserByUsername(username).getFriends());
+//        return "dashboard";
+//    }
 }

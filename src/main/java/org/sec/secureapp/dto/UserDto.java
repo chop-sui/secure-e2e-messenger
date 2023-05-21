@@ -3,7 +3,9 @@ package org.sec.secureapp.dto;
 import java.util.List;
 
 public record UserDto(
-        Integer id,
-        List<Integer> friends
+    Integer id,
+    String username,
+    String password,
+    List<Integer> friends
 ) {
 }

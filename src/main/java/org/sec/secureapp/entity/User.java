@@ -3,14 +3,12 @@ package org.sec.secureapp.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -24,14 +22,27 @@ import java.util.List;
         property = "id")
 @Accessors(chain = true)
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
     @Id
     @SequenceGenerator(name = "users_generator", sequenceName = "users_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_generator")
-    @Column(name = "id")
     private Integer id;
+
+    @NotNull(message = "Username cannot be empty")
+    @Column(name = "username", unique = true)
     private String username;
+
+    @NotNull(message = "Password cannot be empty")
+    @Length(min = 7, message = "Password should be at least 7 characters long")
+    @Column(name = "password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinTable(
+        name="users_roles",
+        joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
+        inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
+    private List<Role> roles = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -40,33 +51,4 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "fk_id_friend", referencedColumnName = "id", nullable = false)
     )
     private List<User> friends;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection <GrantedAuthority> collectors = new ArrayList<>();
-
-//        collectors.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
-        return collectors;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

@@ -2,13 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
     <title>USYD COMP SUPPORT SYSTEM</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
   </head>
   <body>
-    <h1>Welcome to [[${pageName}]]</h1>
-    <div class="container-fluid text-center">
-      <p><a th:href="@{|/login|}" th:text="'Login'"></a></p>
-      <p><a th:href="@{|/register|}" th:text="'Register'"></a></p>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="container-fluid text-center" style="margin-top: 25px; margin-bottom: 10px">
+      <h1> Welcome to UCSS!</h1>
+      <img src="images/homepage-banner.jpg" alt="Homepage Banner" width="1000px" height="400px">
     </div>
+
+    <div class="container-fluid text-center">
+      <div class="d-grid gap-4 d-md-block">
+        <a th:href="@{|/about|}" class="btn btn-secondary btn-lg" th:text="'About'"></a>
+        <a th:href="@{|/help|}" class="btn btn-secondary btn-lg" th:text="'Help'"></a>
+      </div>
+      <div class="container-fluid text-center" style="margin-top: 20px; margin-bottom: 30px">
+        <p>New to the site? Register <a th:href="@{|/register|}" th:text="'HERE'"></a></p>
+      </div>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
   </body>
 </html>
