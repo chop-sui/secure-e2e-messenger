@@ -6,6 +6,8 @@ import org.sec.secureapp.entity.Role;
 import org.sec.secureapp.entity.User;
 import org.sec.secureapp.repository.RoleRepository;
 import org.sec.secureapp.repository.UserRepository;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,9 +58,27 @@ public class UserService {
         return Arrays.asList(userExists, message);
     }
 
+    public void addFriend(User user, User friend) {
+        user.addFriend(friend);
+        userRepository.save(friend);
+    }
+
+    public void removeFriend(User user, Integer friendId) {
+        user.removeFriend(friendId);
+        userRepository.save(user);
+    }
+
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found."));
     }
 
+    public User getUserById(Integer id) {
+        return userRepository.findById(id)
+            .orElseThrow(() -> new UsernameNotFoundException("User with id: " + id + " not found."));
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 }

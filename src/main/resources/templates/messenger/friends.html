@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+        <title>Friends</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+        <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <script>
+            function toggleTable(table_num) {
+                if (!table_num) {
+                    document.getElementById("table0").style.display = "block";
+                    document.getElementById("table1").style.display = "none";
+                } else {
+                    document.getElementById("table0").style.display = "none";
+                    document.getElementById("table1").style.display = "block";
+                }
+            }
+
+            function setReceiver(username) {
+                console.log("Set " + username);
+                receiver = username;
+            }
+        </script>
+        <div th:replace="~{fragments/header :: header}"></div>
+        <div class="container-fluid text-center" style="display: flex; flex-direction: column; height: 900px; margin-top: 25px; margin-bottom: 25px">
+            <div class="container-fluid text-center">
+                <button type="button" class="btn btn-secondary btn-lg" onclick="toggleTable(0)">Users</button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="toggleTable(1)">Friends</button>
+            </div>
+            <div class="container-fluid text-center">
+                <table class="table" id="table0" style="display: block">
+                    <thead>
+                    <tr>
+                        <th scope="col">Users</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${users.empty}">
+                        <td>No Users</td>
+                        <td></td>
+                    </tr>
+                    <tr th:id="${user.id}" th:each="user:${users}">
+                        <td th:text="${user.username}"></td>
+                        <td th:if="${#lists.contains(friendsNames, user.username)}"><div th:text="'Already Friends'"></div></td>
+                        <td th:if="${!#lists.contains(friendsNames, user.username)}"><a th:href="@{|/messenger/friends/add/${user.id}|}" class="btn btn-secondary" th:text="'Add'"></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="table" id="table1" style="display: none">
+                    <thead>
+                    <tr>
+                        <th scope="col">Friends</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${friends.empty}">
+                        <td>No friends</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr th:id="${friend.id}" th:each="friend:${friends}">
+                        <td th:text="${friend.username}"></td>
+                        <td><a th:href="@{|/messenger/chatroom/${friend.id}|}" class="btn btn-secondary" th:text="'Chat'" th:onclick="setReceiver([[${friend.username}]])"</a></td>
+                        <td><a th:href="@{|/messenger/friends/remove/${friend.id}|}" class="btn btn-secondary" th:text="'Remove'"></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+
+    </body>
+</html>

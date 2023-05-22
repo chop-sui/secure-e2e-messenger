@@ -34,7 +34,13 @@ public class DashboardController {
     @RequestMapping(value= {"/dashboard/save"}, method = RequestMethod.POST)
     public String createPost(Model model, @Valid @ModelAttribute("post") PostDto postDto) {
         dashboardService.savePost(postDto);
-
         return "redirect:/dashboard";
+    }
+
+    @GetMapping(value = "/posts/{id}")
+    public String showPostDetail(Model model, @PathVariable String id) {
+        Post post = dashboardService.getPostById(Integer.parseInt(id));
+        model.addAttribute("post", post);
+        return "dashboard/post_detail";
     }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+        <title>Messenger</title>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+        <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            let username = "[[${username}]]";
+            let receiver = "[[${friendUsername}]]";
+        </script>
+        <script type="text/javascript" th:src="@{/js/action.js}"></script>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header :: header}"></div>
+        <div class="container-fluid text-center" style="display: flex; height: 900px; margin-top: 25px; margin-bottom: 25px">
+            <div style="display:flex; flex-direction: column; height: 70%; width: 50%; margin: 20px 20px 20px 20px">
+                <div id="message-display" style="height: 100%; border: solid black">
+                    <ul id="messages"></ul>
+                </div>
+                <div id="message-input" style="display: flex">
+                    <textarea id="message" rows="4" style="height: 100%; width: 100%; box-sizing: border-box"></textarea>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+
+    </body>
+</html>

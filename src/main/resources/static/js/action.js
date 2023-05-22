@@ -4,6 +4,11 @@ let sessionId = "";
 let sharedSecretKey = "";
 
 async function sendMessage() {
+    if (!receiver) {
+        alert("Please select a friend to chat with");
+        return;
+    }
+
     const messageInput = document.getElementById('message');
 
     const encodedMsg = new TextEncoder().encode(messageInput.value);
@@ -19,7 +24,7 @@ async function sendMessage() {
 
     let msg = {
         'from': username,
-        'to': username === 'tommy12' ? 'jonny12' : 'tommy12',
+        'to': receiver,
         'text': base64Msg
     };
 
@@ -64,7 +69,7 @@ async function main() {
 
         let msg = {
             'from': username,
-            'to': username === 'tommy12' ? 'jonny12' : 'tommy12',
+            'to': receiver,
             'key': publicKeyJwk
         };
         stompClient.send('/app/secured/chat/key', {}, JSON.stringify(msg));
@@ -75,7 +80,7 @@ async function main() {
                 if (username === "tommy12") {
                     let msg = {
                         'from': username,
-                        'to': username === 'tommy12' ? 'jonny12' : 'tommy12',
+                        'to': receiver,
                         'key': publicKeyJwk
                     };
                     stompClient.send('/app/secured/chat/key', {}, JSON.stringify(msg));
@@ -92,14 +97,13 @@ async function main() {
                 );
 
                 sharedSecretKey = await crypto.subtle.deriveKey(
-                    { name: "ECDH", public: publicKey },
+                    {name: "ECDH", public: publicKey},
                     keyPair.privateKey,
-                    { name: "AES-GCM", length: 256 },
+                    {name: "AES-GCM", length: 256},
                     true,
                     ["encrypt", "decrypt"]
                 );
             } else {
-
                 try {
                     const msg = JSON.parse(message.body);
                     const text = msg.text;
@@ -127,8 +131,6 @@ async function main() {
             }
         });
     });
-
-
 }
 
 main().then(r => console.log(r));

@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -37,6 +38,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "about_me")
+    private String aboutMe;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
         name="users_roles",
@@ -51,4 +55,17 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "fk_id_friend", referencedColumnName = "id", nullable = false)
     )
     private List<User> friends;
+
+    public void addFriend(User friend) {
+        this.friends.add(friend);
+        friend.getFriends().add(this);
+    }
+
+    public void removeFriend(Integer friendId) {
+        User friend = this.friends.stream().filter(f -> Objects.equals(f.getId(), friendId)).findFirst().orElse(null);
+        if (friend != null) {
+            this.friends.remove(friend);
+            friend.getFriends().remove(this);
+        }
+    }
 }

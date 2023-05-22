@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
@@ -21,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="post:${posts}">
+          <tr th:each="post:${posts}" th:href="@{|/posts/{post.id}|}">
             <td th:text="${post.id}"></td>
             <td th:text="${post.title}"></td>
             <td th:text="${post.user.username}"></td>

@@ -46,4 +46,9 @@ public class DashboardService {
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
+
+    public Post getPostById(Integer id) {
+        return postRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Cannot find post with id " + id));
+    }
 }
