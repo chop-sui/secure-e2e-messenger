@@ -13,8 +13,8 @@
     <div th:replace="~{fragments/header :: header}"></div>
 
     <div class="container-fluid text-center" style="margin-top: 25px; margin-bottom: 50px">
-      <h2>Username: </h2>
-      <p>About me</p>
+      <h2>Username: </h2><p th:text="${user.name}"></p>
+      <h2>About me: </h2><p th:Text="${user.aboutMe}"></p>
     </div>
 
     <div th:replace="~{fragments/footer :: footer}"></div>

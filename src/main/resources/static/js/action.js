@@ -61,7 +61,7 @@ async function main() {
         let url = stompClient.ws._transport.url;
 
         url = url.replace(
-            "wss://localhost:8080/secured/chat/", "");
+            "wss://localhost:8443/secured/chat/", "");
         url = url.replace("/websocket", "");
         url = url.replace(/^[0-9]+\//, "");
         console.log("Your current session is: " + url);
@@ -77,7 +77,7 @@ async function main() {
         stompClient.subscribe('/secured/user/queue/specific-user' + '-user' + sessionId, async function (message) {
             const data = JSON.parse(message.body);
             if (data['key']) {
-                if (username === "tommy12") {
+                if (cnt === "1") {
                     let msg = {
                         'from': username,
                         'to': receiver,

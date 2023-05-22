@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 public class MessengerController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final UserService userService;
+    private int cnt = 0;
 
     @GetMapping("/messenger/chatroom/{id}")
     public String showChatRoom(Model model, @PathVariable String id) {
@@ -39,8 +40,10 @@ public class MessengerController {
         User friend = userService.getUserById(Integer.parseInt(id));
 
         if (username != null) {
+            cnt++;
             model.addAttribute("username", username);
             model.addAttribute("friendUsername", friend.getUsername());
+            model.addAttribute("cnt", cnt);
         } else {
             model.addAttribute("username", "someUser");
         }
