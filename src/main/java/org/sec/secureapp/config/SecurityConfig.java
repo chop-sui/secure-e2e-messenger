@@ -30,6 +30,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/", "/about", "/help", "/login", "/register").permitAll()
                 .requestMatchers("/favicon.ico", "/error").permitAll()
+                .requestMatchers("/posts/remove/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
             )

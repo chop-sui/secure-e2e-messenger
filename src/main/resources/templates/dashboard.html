@@ -19,6 +19,7 @@
             <th scope="col">Number</th>
             <th scope="col">Title</th>
             <th scope="col">User</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
             <td th:text="${post.id}"></td>
             <td><a th:href="@{|/posts/${post.id}|}" th:text="${post.title}"></a></td>
             <td th:text="${post.user.username}"></td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{|/posts/remove/${post.id}|}" class="btn btn-secondary btn-lg" th:text="'Remove'"></a></td>
         </tbody>
       </table>
     </div>

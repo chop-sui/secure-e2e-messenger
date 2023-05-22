@@ -56,6 +56,11 @@ public class User {
     )
     private List<User> friends;
 
+    @ElementCollection
+    @CollectionTable(name = "user_todos", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "todos")
+    private List<String> todos;
+
     public void addFriend(User friend) {
         this.friends.add(friend);
         friend.getFriends().add(this);
@@ -67,5 +72,9 @@ public class User {
             this.friends.remove(friend);
             friend.getFriends().remove(this);
         }
+    }
+
+    public void addTodo(String todo) {
+        this.todos.add(todo);
     }
 }

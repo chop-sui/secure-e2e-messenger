@@ -51,4 +51,8 @@ public class DashboardService {
         return postRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Cannot find post with id " + id));
     }
+
+    public void removePostById(Integer id) {
+        postRepository.deleteById(id);
+    }
 }

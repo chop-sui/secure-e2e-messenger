@@ -43,4 +43,10 @@ public class DashboardController {
         model.addAttribute("post", post);
         return "dashboard/post_detail";
     }
+
+    @GetMapping(value = {"/posts/remove/{id}"})
+    public String removePost(@PathVariable String id) {
+        dashboardService.removePostById(Integer.parseInt(id));
+        return "dashboard";
+    }
 }

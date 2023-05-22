@@ -1,22 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-  <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-    <title>My Profile</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-  </head>
-  <body>
-    <div th:replace="~{fragments/header :: header}"></div>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
+  <title>My Profile</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
 
-    <div class="container-fluid text-center" style="margin-top: 25px; margin-bottom: 50px">
-      <h2>Username: </h2><p th:text="${user.name}"></p>
-      <h2>About me: </h2><p th:Text="${user.aboutMe}"></p>
-    </div>
+<div class="container-fluid text-center"
+     style="display: flex; flex-direction: column; height: 900px; margin-top: 25px; margin-bottom: 25px">
+  <h2>Username: </h2>
+  <p th:text="${user.username}"></p>
+  <h2>About me: </h2>
+  <p th:text="${user.aboutMe}"></p>
+  <br/><br/>
 
-    <div th:replace="~{fragments/footer :: footer}"></div>
-  </body>
+  <div class="my-3" style="margin-top: 50px; margin-bottom: 50px">
+    <form th:action="@{/profile/todos}" method="post" style="max-width: 1500px; margin: 0 auto">
+      <div class="container-fluid text-center" style="width: 1000px; height: 20px; margin: 20px 20px 20px 20px">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="todoText">Write a todo!</label>
+          <div class="col-sm-9">
+            <input type="text" th:value="${todoText}" class="form-control" id="todoText" name="todoText"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center" style="margin-top: 20px">
+        <button type="submit" class="btn btn-secondary">Create</button>
+      </div>
+      <span th:utext="${successMessage}"></span>
+      <div class="text-center" th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
+        <ul th:each="data : ${bindingResult.getAllErrors()}">
+          <li th:text="${data.getObjectName() + ': ' + data.getDefaultMessage()}"></li>
+        </ul>
+      </div>
+    </form>
+  </div>
+
+  <div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px">
+    <ul th:each="todo:${todos}">
+      <li th:text="${todo}"></li>
+    </ul>
+  </div>
+
+  <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
 </html>

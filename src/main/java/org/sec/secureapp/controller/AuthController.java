@@ -2,9 +2,12 @@ package org.sec.secureapp.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.sec.secureapp.dto.TodoDto;
 import org.sec.secureapp.dto.UserDto;
 import org.sec.secureapp.entity.User;
 import org.sec.secureapp.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +51,27 @@ public class AuthController {
         model.addAttribute("successMessage", "User registered successfully");
 
         return "homepage";
+    }
+
+    @GetMapping("/profile")
+    public String showProfilePage(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("user", user);
+        model.addAttribute("todos", user.getTodos());
+        return "profile";
+    }
+
+    @PostMapping("/profile/todos")
+    public String addTodo(@RequestParam String todoText) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+
+        User user = userService.getUserByUsername(username);
+        userService.addTodo(user, todoText);
+        return "redirect:/profile";
     }
 
 }

@@ -32,17 +32,19 @@
                 <button type="button" class="btn btn-secondary btn-lg" onclick="toggleTable(0)">Users</button>
                 <button type="button" class="btn btn-secondary btn-lg" onclick="toggleTable(1)">Friends</button>
             </div>
-            <div class="container-fluid text-center">
-                <table class="table" id="table0" style="display: block">
+
+            <div class="container-fluid" style="display: flex; justify-content: center; margin-top: 20px">
+                <table class="table" id="table0" style="width: 200px; display: block; align-self: center">
                     <thead>
                     <tr>
-                        <th scope="col">Users</th>
-                        <th scope="col"></th>
+                        <th>Users</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:if="${users.empty}">
                         <td>No Users</td>
+                        <td></td>
                         <td></td>
                     </tr>
                     <tr th:id="${user.id}" th:each="user:${users}">
@@ -52,12 +54,12 @@
                     </tr>
                     </tbody>
                 </table>
-                <table class="table" id="table1" style="display: none">
+                <table class="table" id="table1" style="width: 200px; display: none; align-self: center">
                     <thead>
                     <tr>
-                        <th scope="col">Friends</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th>Friends</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
