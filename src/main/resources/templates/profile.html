@@ -12,27 +12,26 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 
-<div class="container-fluid text-center"
-     style="display: flex; flex-direction: column; height: 900px; margin-top: 25px; margin-bottom: 25px">
-  <h2>Username: </h2>
+<div class="container-fluid" style="margin-top: 25px; margin-bottom: 25px">
+  <h2>Username</h2>
   <p th:text="${user.username}"></p>
-  <h2>About me: </h2>
+  <h2>About me</h2>
   <p th:text="${user.aboutMe}"></p>
-  <br/><br/>
+  <p>I'm a first year undergraduate COMP student and my interests are Java and Python programming.</p>
 
-  <div class="my-3" style="margin-top: 50px; margin-bottom: 50px">
-    <form th:action="@{/profile/todos}" method="post" style="max-width: 1500px; margin: 0 auto">
-      <div class="container-fluid text-center" style="width: 1000px; height: 20px; margin: 20px 20px 20px 20px">
+  <div class="container-fluid text-center">
+    <h2>My todos list</h2>
+  </div>
+
+  <div class="my-3">
+    <form th:action="@{/profile/todos}" method="post" style="margin: 0 auto">
+      <div class="container-fluid text-center" style="display: flex; justify-content: center">
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label" for="todoText">Write a todo!</label>
-          <div class="col-sm-9">
+          <div class="col-sm-12">
             <input type="text" th:value="${todoText}" class="form-control" id="todoText" name="todoText"/>
           </div>
         </div>
-      </div>
-
-      <div class="text-center" style="margin-top: 20px">
-        <button type="submit" class="btn btn-secondary">Create</button>
+        <button type="submit" class="btn btn-secondary" style="margin-left: 10px">Create</button>
       </div>
       <span th:utext="${successMessage}"></span>
       <div class="text-center" th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
@@ -43,9 +42,10 @@
     </form>
   </div>
 
-  <div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px">
-    <ul th:each="todo:${todos}">
-      <li th:text="${todo}"></li>
+  <div class="container-fluid text-center">
+    <ul id="list" th:each="todo:${todos}" style="text-align: center; list-style-position: inside;">
+      <li th:text="${todo.content}"></li>
+      <a th:href="@{|/profile/todos/remove/${todo.id}|}" class="btn btn-secondary btn-sm" th:text="'Remove'"></a>
     </ul>
   </div>
 

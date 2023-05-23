@@ -3,6 +3,7 @@ package org.sec.secureapp.service;
 import lombok.RequiredArgsConstructor;
 import org.sec.secureapp.dto.UserDto;
 import org.sec.secureapp.entity.Role;
+import org.sec.secureapp.entity.Todo;
 import org.sec.secureapp.entity.User;
 import org.sec.secureapp.repository.RoleRepository;
 import org.sec.secureapp.repository.UserRepository;
@@ -10,10 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -80,10 +78,5 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
-    }
-
-    public void addTodo(User user, String compliment) {
-        user.addTodo(compliment);
-        userRepository.save(user);
     }
 }

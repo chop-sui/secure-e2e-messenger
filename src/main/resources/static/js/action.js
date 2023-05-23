@@ -61,7 +61,7 @@ async function main() {
         let url = stompClient.ws._transport.url;
 
         url = url.replace(
-            "wss://localhost:8443/secured/chat/", "");
+            "ws://localhost:8080/secured/chat/", "");
         url = url.replace("/websocket", "");
         url = url.replace(/^[0-9]+\//, "");
         console.log("Your current session is: " + url);

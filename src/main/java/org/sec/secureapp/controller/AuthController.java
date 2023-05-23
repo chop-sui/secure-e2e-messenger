@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.sec.secureapp.dto.TodoDto;
 import org.sec.secureapp.dto.UserDto;
 import org.sec.secureapp.entity.User;
+import org.sec.secureapp.service.TodoService;
 import org.sec.secureapp.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +21,7 @@ import java.util.List;
 public class AuthController {
 
     private final UserService userService;
+    private final TodoService todoService;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public String login() {
@@ -70,7 +72,19 @@ public class AuthController {
         String username = ((UserDetails) principal).getUsername();
 
         User user = userService.getUserByUsername(username);
-        userService.addTodo(user, todoText);
+        todoService.addTodo(user, todoText);
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/profile/todos/remove/{id}")
+    public String removeTodo (@PathVariable String id) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        User user = userService.getUserByUsername(username);
+
+        System.out.println("REMOVING todo with id " + id);
+
+        todoService.removeTodo(Integer.parseInt(id));
         return "redirect:/profile";
     }
 

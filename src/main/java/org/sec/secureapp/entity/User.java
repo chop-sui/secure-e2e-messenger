@@ -56,10 +56,8 @@ public class User {
     )
     private List<User> friends;
 
-    @ElementCollection
-    @CollectionTable(name = "user_todos", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "todos")
-    private List<String> todos;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Todo> todos;
 
     public void addFriend(User friend) {
         this.friends.add(friend);
@@ -74,7 +72,4 @@ public class User {
         }
     }
 
-    public void addTodo(String todo) {
-        this.todos.add(todo);
-    }
 }
